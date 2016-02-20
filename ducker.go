@@ -111,7 +111,7 @@ func NewAscii(command string) *Ascii {
         ascii.StopTimeInMillis = 20 * time.Millisecond
     default:
         ascii.Texts = m[PS]
-        ascii.StopTimeInMillis = 50 * time.Millisecond
+        ascii.StopTimeInMillis = 20 * time.Millisecond
     }
 
     return ascii
