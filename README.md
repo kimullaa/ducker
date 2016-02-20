@@ -1,2 +1,2 @@
 # ducker
-joke command like docker command 
+The joke command like docker
