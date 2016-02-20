@@ -1,2 +1,2 @@
 # ducker
-dockerのjokeコマンドをgoで書いてみる(書きかけ)
+The joke command like docker
