@@ -24,7 +24,6 @@ var out io.Writer = os.Stdout
 var m  = map[string] []string {
 RUN : strings.Split(
 `        
-          
   ___   
  / "" \\  I'm a highway star
 <  o   \     
@@ -33,22 +32,20 @@ RUN : strings.Split(
  |    ''''" \  ＝＝ 3
  \\_________/      3
      \ \ 
-     ` , "\n"),
+` , "\n"),
 PULL : strings.Split(
 `        
-             
-         ___    someone is pulling me
-        / "" \
+         ___    
+        / "" \  someone is pulling me
 <<<<<<<<  o   \     
         \     |___     
         /    _____\<   
         |    ''''" ~\  
         \\~~~~~~~~~~/ 
         
-     ` , "\n"),
+` , "\n"),
 PS : strings.Split(
 `        
-        
   ___    
  / "" \\  p.s. my holiday has gone to waste
 <  o   \   
@@ -57,7 +54,7 @@ PS : strings.Split(
  |    ''''" \ 
  \\_________/
  ～～～～～～～～～～～
-     ` , "\n"),
+` , "\n"),
 }
 
 
