@@ -9,54 +9,9 @@ import(
     "io"
     "os/exec"
     "time"
-    "log"
-)
-
-const (
-    RUN = "run"
-    PS = "ps"
-    PULL = "pull"
 )
 
 var out io.Writer = os.Stdout
-
-// MAP[COMMAND , AsciiArt]
-var m  = map[string] []string {
-RUN : strings.Split(
-`        
-  ___   
- / "" \\  I'm a highway star
-<  o   \     
- \     |___     
- /    _____\<      3
- |    ''''" \  ＝＝ 3
- \\_________/      3
-     \ \ 
-` , "\n"),
-PULL : strings.Split(
-`        
-         ___    
-        / "" \  someone is pulling me
-<<<<<<<<  o   \     
-        \     |___     
-        /    _____\<   
-        |    ''''" ~\  
-        \\~~~~~~~~~~/ 
-        
-` , "\n"),
-PS : strings.Split(
-`        
-  ___    
- / "" \\  p.s. my holiday has gone to waste
-<  o   \   
- \     |___     
- /    _____\<
- |    ''''" \ 
- \\_________/
- ～～～～～～～～～～～
-` , "\n"),
-}
-
 
 // return current terminal window (width,height)
 func getTerminalSize() (width,height int) {
@@ -65,7 +20,6 @@ func getTerminalSize() (width,height int) {
     out,err := cmd.Output()
 
     if err != nil {
-	log.Fatal(err)
 	//default size
         width  = 70
         height = 10
@@ -87,31 +41,71 @@ func decideCursolPosition() (width,height int) {
 }
 
 
-type Ascii struct {
-    Texts []string
+type Command struct {
+    AsciiArt []string
     StopTimeInMillis time.Duration
 }
 
-func NewAscii(command string) *Ascii {
+func NewCommand(inputText string) *Command {
 
-    ascii := &Ascii{}
+    command := &Command{}
 
-    switch  command{
-    case RUN: 
-        ascii.Texts = m[RUN]
-        ascii.StopTimeInMillis = 10 * time.Millisecond
-    case PULL:
-        ascii.Texts = m[PULL]
-        ascii.StopTimeInMillis = 20 * time.Millisecond
-    case PS:
-        ascii.Texts = m[PS]
-        ascii.StopTimeInMillis = 20 * time.Millisecond
+    switch inputText{
+    case "run": 
+        command.StopTimeInMillis = 10 * time.Millisecond
+        command.AsciiArt = strings.Split(
+`        
+  ___   
+ / "" \\  I'm a highway star
+<  o   \     
+ \     |___     
+ /    _____\<      3
+ |    ''''" \  ＝＝ 3
+ \\_________/      3
+     \ \ 
+` , "\n")
+    case "pull":
+        command.StopTimeInMillis = 20 * time.Millisecond
+        command.AsciiArt = strings.Split(
+`        
+         ___    
+        / "" \  someone is pulling me
+<<<<<<<<  o   \     
+        \     |___     
+        /    _____\<   
+        |    ''''" ~\  
+        \\~~~~~~~~~~/ 
+        
+` , "\n")
+    case "ps":
+        command.StopTimeInMillis = 20 * time.Millisecond
+        command.AsciiArt = strings.Split(
+`        
+  ___    
+ / "" \\  p.s. my holiday has gone to waste
+<  o   \   
+ \     |___     
+ /    _____\<
+ |    ''''" \ 
+ \\_________/
+ ～～～～～～～～～～～
+` , "\n")
     default:
-        ascii.Texts = m[PS]
-        ascii.StopTimeInMillis = 20 * time.Millisecond
+        command.StopTimeInMillis = 20 * time.Millisecond
+        command.AsciiArt =  strings.Split(
+`        
+  ___    
+ / "" \\  p.s. my holiday has gone to waste
+<  o   \   
+ \     |___     
+ /    _____\<
+ |    ''''" \ 
+ \\_________/
+ ～～～～～～～～～～～
+` , "\n")
     }
 
-    return ascii
+    return command
 }
 
 
@@ -119,19 +113,19 @@ func NewAscii(command string) *Ascii {
 func main(){
 
     flag.Parse()
-    ascii := NewAscii(flag.Arg(0))
+    command := NewCommand(flag.Arg(0))
 
     // clear a window
     fmt.Fprintln(out,"\x1b[2J")
 
-    // print AA
+    // print AsciiArt
     start_width,start_height := decideCursolPosition()
     for width := start_width; width > 0; width-- {
-	for i := 0; i < len(ascii.Texts); i++{
+	for i := 0; i < len(command.AsciiArt); i++{
             fmt.Fprintf(out,"\x1b[%d;%dH\x1b[2K",start_height+i,width)
-	    fmt.Print(ascii.Texts[i])
+	    fmt.Print(command.AsciiArt[i])
 	}
-	time.Sleep(ascii.StopTimeInMillis)
+	time.Sleep(command.StopTimeInMillis)
     }
 
 }
