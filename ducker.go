@@ -111,7 +111,6 @@ func NewCommand(inputText string) *Command {
 
 
 func main(){
-
     flag.Parse()
     command := NewCommand(flag.Arg(0))
 
