@@ -1,10 +1,10 @@
 # ducker
 The joke command like docker
 
-#install 
+# install 
 go get github.com/kimullamen/ducker
 
-#action
+# action
 ## ducker run
 
 ![run command](http://cdn-ak.f.st-hatena.com/images/fotolife/k/kimulla/20160221/20160221140255.gif)
@@ -13,7 +13,7 @@ go get github.com/kimullamen/ducker
 
 ![pull command](http://cdn-ak.f.st-hatena.com/images/fotolife/k/kimulla/20160221/20160221140241.gif)
 
-##ducker ps  
+## ducker ps  
 
 ![ps command](http://cdn-ak.f.st-hatena.com/images/fotolife/k/kimulla/20160221/20160221140223.gif)
 
